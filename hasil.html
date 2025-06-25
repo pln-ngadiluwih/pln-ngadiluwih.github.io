@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Data Pelanggan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Reset & Header */
+    * {
+      margin: 0;
+      padding: 0;
+      
+    }
+
+    .navbar {
+      background-color: cyan;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 5%;
+      flex-wrap: wrap;
+      height: 90px;
+    }
+
+    .navbar-logo {
+      height: 100px;
+      width: 200px;
+    }
+
+    .navbar-menu {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .navbar-link {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .navbar-link:hover {
+      color: darkblue;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      border-radius: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 22px;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 12px;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .value {
+      font-size: 16px;
+      color: #222;
+      margin-top: 4px;
+      word-break: break-word;
+    }
+
+    .error {
+      text-align: center;
+      color: red;
+      font-size: 16px;
+      margin-top: 30px;
+    }
+
+    @media (min-width: 600px) {
+      .row {
+        flex-direction: row;
+      }
+
+      .label {
+        width: 40%;
+      }
+
+      .value {
+        width: 60%;
+        margin-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <img src="PT-PLN-Persero-04-scaled-removebg-preview.png" alt="Logo PLN" class="navbar-logo" />
+    <ul class="navbar-menu">
+      <li><a href="index.html" class="navbar-link">BERANDA</a></li>
+      <li><a href="Pelanggan.html" class="navbar-link">PELANGGAN</a></li>
+    </ul>
+  </header>
+
+  <div class="container">
+    <h2>Data Pelanggan</h2>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get("query");
+    const URLWebApp = "https://script.google.com/macros/s/AKfycbx_czjGrIHOfp9xU60DgEgJTXTxYg2iAoNBHFBi_aqMd779fUU9sHnvLYNMGaM2XJup/exec"; // Ganti dengan milikmu
+
+    if (!query) {
+      document.getElementById("output").innerHTML = "<p class='error'>Query tidak ditemukan di URL.</p>";
+    } else {
+      fetch(`${URLWebApp}?query=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+          const output = document.getElementById("output");
+
+          if (data.error) {
+            output.innerHTML = `<p class="error">${data.error}</p>`;
+            return;
+          }
+
+          let html = "";
+          for (const key in data) {
+            let value = data[key];
+            if (key === "JADWAL PADAM" && typeof value === "string" && value.includes("T")) {
+              value = value.slice(0, 10);
+            }
+
+            html += `
+              <div class="row">
+                <div class="label">${key}</div>
+                <div class="value">${value}</div>
+              </div>
+            `;
+          }
+
+          output.innerHTML = html;
+        })
+        .catch(() => {
+          document.getElementById("output").innerHTML = "<p class='error'>Terjadi kesalahan saat mengambil data.</p>";
+        });
+    }
+  </script>
+</body>
+</html>
