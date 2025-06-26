@@ -3,13 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <title>Data Pelanggan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    /* Reset & Header */
     * {
       margin: 0;
       padding: 0;
-      
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
     }
 
     .navbar {
@@ -17,44 +21,35 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 5%;
       flex-wrap: wrap;
-    }
-
-    .navbar-logo {
-      height: 100px;
-      width: 200px;
+      padding: 12px 5%;
     }
 
     .navbar-left {
       display: flex;
       align-items: center;
-      gap: 16px
+      gap: 16px;
+    }
+
+    .navbar-logo {
+      height: 100px;
+      width: auto;
     }
 
     .navbar-link {
-      text-decoration: none;
+      font-size: 24px;
+      font-weight: bold;
       color: white;
-      font-size: 25px;
-      font-weight: 600;
-      list-style-type: none;
     }
-    
+
     .navbar-right {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      color: gray;
-      font-size: 18px;
+      color: #333;
+      font-size: 14px;
       line-height: 1.4;
-    }
-
-
-    body {
-      font-family: sans-serif;
-      background: #f9f9f9;
-      padding: 0;
-      margin: 0;
+      margin-top: 8px;
     }
 
     .container {
@@ -62,8 +57,8 @@
       margin: 30px auto;
       background: white;
       padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
       border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
 
     h2 {
@@ -98,6 +93,26 @@
       margin-top: 30px;
     }
 
+    .back-container {
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .nav-back {
+      text-decoration: none;
+      color: white;
+      background: cyan;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 16px;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+
+    .nav-back:hover {
+      background: darkcyan;
+    }
+
     @media (min-width: 600px) {
       .row {
         flex-direction: row;
@@ -112,18 +127,8 @@
         margin-top: 0;
       }
 
-      .inner-container{
-        max-width: 90px;
-      margin: 30px auto;
-      background: cyan;
-      padding: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      border-radius: 8px; 
-      }
-
-      .nav-back{
-      font-size: 24px;
-      text-decoration: none;
+      .navbar-right {
+        font-size: 16px;
       }
     }
   </style>
@@ -131,31 +136,29 @@
 <body>
 
   <header class="navbar">
-    
-    <ul class="navbar-left">
+    <div class="navbar-left">
       <img src="PT-PLN-Persero-04-scaled-removebg-preview.png" alt="Logo PLN" class="navbar-logo" />
-      <li class="navbar-link">INFO PADAM</li>
-      
-    </ul>
+      <div class="navbar-link">INFO PADAM</div>
+    </div>
     <div class="navbar-right">
-      <div class="ulp">UID JATIM</div>
-      <div class="ulp">UP3 KEDIRI</div>
-      <div class="ulp">ULP NGADILUWIH</div>
+      <div>UID JATIM</div>
+      <div>UP3 KEDIRI</div>
+      <div>ULP NGADILUWIH</div>
     </div>
   </header>
 
   <div class="container">
     <h2>Data Pelanggan</h2>
     <div id="output"></div>
-    <div class="inner-container">
-      <back><a href="index.html" class="nav-back"> Kembali </a></back> 
+    <div class="back-container">
+      <a href="index.html" class="nav-back">← Kembali</a>
     </div>
   </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const query = params.get("query");
-    const URLWebApp = "https://script.google.com/macros/s/AKfycbx_czjGrIHOfp9xU60DgEgJTXTxYg2iAoNBHFBi_aqMd779fUU9sHnvLYNMGaM2XJup/exec"; // Ganti dengan milikmu
+    const URLWebApp = "https://script.google.com/macros/s/AKfycbx_czjGrIHOfp9xU60DgEgJTXTxYg2iAoNBHFBi_aqMd779fUU9sHnvLYNMGaM2XJup/exec";
 
     if (!query) {
       document.getElementById("output").innerHTML = "<p class='error'>Query tidak ditemukan di URL.</p>";
@@ -172,19 +175,13 @@
 
           let html = "";
           for (const key in data) {
-            let value = data[key];
-            if (key === "JADWAL PADAM" && typeof value === "string" && value.includes("T")) {
-              value = value.slice(0, 10);
-            }
-
             html += `
               <div class="row">
                 <div class="label">${key}</div>
-                <div class="value">${value}</div>
+                <div class="value">${data[key]}</div>
               </div>
             `;
           }
-
           output.innerHTML = html;
         })
         .catch(() => {
