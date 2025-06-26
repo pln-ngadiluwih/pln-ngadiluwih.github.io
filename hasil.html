@@ -15,11 +15,10 @@
     .navbar {
       background-color: cyan;
       display: flex;
-      justify-content: left;
+      justify-content: space-between;
       align-items: center;
       padding: 10px 5%;
       flex-wrap: wrap;
-      height: 90px;
     }
 
     .navbar-logo {
@@ -27,12 +26,10 @@
       width: 200px;
     }
 
-    .navbar-menu {
-      list-style: none;
+    .navbar-left {
       display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-
+      align-items: center;
+      gap: 16px
     }
 
     .navbar-link {
@@ -40,6 +37,16 @@
       color: white;
       font-size: 25px;
       font-weight: 600;
+      list-style-type: none;
+    }
+    
+    .navbar-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      color: gray;
+      font-size: 18px;
+      line-height: 1.4;
     }
 
 
@@ -124,11 +131,17 @@
 <body>
 
   <header class="navbar">
-    <img src="PT-PLN-Persero-04-scaled-removebg-preview.png" alt="Logo PLN" class="navbar-logo" />
-    <ul class="navbar-menu">
+    
+    <ul class="navbar-left">
+      <img src="PT-PLN-Persero-04-scaled-removebg-preview.png" alt="Logo PLN" class="navbar-logo" />
       <li class="navbar-link">INFO PADAM</li>
       
     </ul>
+    <div class="navbar-right">
+      <div class="ulp">UID JATIM</div>
+      <div class="ulp">UP3 KEDIRI</div>
+      <div class="ulp">ULP NGADILUWIH</div>
+    </div>
   </header>
 
   <div class="container">
@@ -142,7 +155,7 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const query = params.get("query");
-    const URLWebApp = "https://script.google.com/macros/s/AKfycby10NMCGB6PNuYCrtrYak5ksIAV1An6xDC939tzjP1PgcY_2azY7bt-bwB7X8j7toHl/exec"; // Ganti dengan milikmu
+    const URLWebApp = "https://script.google.com/macros/s/AKfycbx_czjGrIHOfp9xU60DgEgJTXTxYg2iAoNBHFBi_aqMd779fUU9sHnvLYNMGaM2XJup/exec"; // Ganti dengan milikmu
 
     if (!query) {
       document.getElementById("output").innerHTML = "<p class='error'>Query tidak ditemukan di URL.</p>";
