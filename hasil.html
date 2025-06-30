@@ -14,17 +14,6 @@
 
     body {
       font-family: sans-serif;
-      background: #f9f9f9;
-    }
-
-    {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: sans-serif;
       background: #f5f5f5;
     }
 
@@ -65,7 +54,7 @@
       list-style-type: none; 
     }
 
-    .navbar-link{
+    .navbar-link {
       display: none;
     }
 
@@ -130,23 +119,29 @@
       background: darkcyan;
     }
 
+    /* 🔄 Animasi loading */
+    #loading {
+      text-align: center;
+      margin-top: 30px;
+      display: none;
+    }
+
+    #loading p {
+      color: gray;
+      font-size: 15px;
+      animation: blink 1.4s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
     @media (min-width: 600px) {
-      .row {
-        flex-direction: row;
-      }
-
-      .label {
-        width: 40%;
-      }
-
-      .value {
-        width: 60%;
-        margin-top: 0;
-      }
-
-      .navbar-right {
-        font-size: 16px;
-      }
+      .row { flex-direction: row; }
+      .label { width: 40%; }
+      .value { width: 60%; margin-top: 0; }
+      .navbar-right { font-size: 16px; }
     }
 
     @media (max-width: 600px) {
@@ -194,22 +189,24 @@
       <img src="PT-PLN-Persero-04-scaled-removebg-preview.png" alt="Logo PLN" class="navbar-logo" />
       <div class="navbar-li">INFO PADAM</div>
     </div>
-
     <div class="navbar-right">
       <div>UID JATIM</div>
       <div>UP3 KEDIRI</div>
       <div>ULP NGADILUWIH</div>
     </div>
-
-    <!-- Ini hanya muncul di layar kecil -->
     <div class="navbar-link">INFO PADAM</div>
-
-    
   </header>
 
   <div class="container">
     <h2>Data Pelanggan</h2>
+
+    <!-- ⏳ Loading indicator -->
+    <div id="loading">
+      <p>⏳ Memuat data pelanggan...</p>
+    </div>
+
     <div id="output"></div>
+
     <div class="back-container">
       <a href="index.html" class="nav-back">← Kembali</a>
     </div>
@@ -220,13 +217,18 @@
     const query = params.get("query");
     const URLWebApp = "https://script.google.com/macros/s/AKfycby10NMCGB6PNuYCrtrYak5ksIAV1An6xDC939tzjP1PgcY_2azY7bt-bwB7X8j7toHl/exec";
 
+    const output = document.getElementById("output");
+    const loading = document.getElementById("loading");
+
     if (!query) {
-      document.getElementById("output").innerHTML = "<p class='error'>Query tidak ditemukan di URL.</p>";
+      output.innerHTML = "<p class='error'>Query tidak ditemukan di URL.</p>";
     } else {
+      loading.style.display = "block";
+
       fetch(`${URLWebApp}?query=${encodeURIComponent(query)}`)
         .then(response => response.json())
         .then(data => {
-          const output = document.getElementById("output");
+          loading.style.display = "none";
 
           if (data.error) {
             output.innerHTML = `<p class="error">${data.error}</p>`;
@@ -242,10 +244,12 @@
               </div>
             `;
           }
+
           output.innerHTML = html;
         })
         .catch(() => {
-          document.getElementById("output").innerHTML = "<p class='error'>Terjadi kesalahan saat mengambil data.</p>";
+          loading.style.display = "none";
+          output.innerHTML = "<p class='error'>Terjadi kesalahan saat mengambil data.</p>";
         });
     }
   </script>
