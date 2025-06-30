@@ -150,16 +150,39 @@
     }
 
     @media (max-width: 600px) {
-      .navbar-title {
-        display: block;
+      .navbar {
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .navbar-left {
+        flex-direction: row;
+        align-items: center;
       }
 
       .navbar-logo {
-        height: 60px;
+        height: 80px;
       }
 
       .navbar-right {
+        align-items: flex-end;
         font-size: 12px;
+        margin-top: 0;
+      }
+
+      .navbar-link {
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        margin-top: 8px;
+      }
+
+      .navbar-li {
+        display: none;
       }
     }
   </style>
@@ -169,14 +192,19 @@
   <header class="navbar">
     <div class="navbar-left">
       <img src="PT-PLN-Persero-04-scaled-removebg-preview.png" alt="Logo PLN" class="navbar-logo" />
-      
+      <div class="navbar-li">INFO PADAM</div>
     </div>
+
     <div class="navbar-right">
       <div>UID JATIM</div>
       <div>UP3 KEDIRI</div>
       <div>ULP NGADILUWIH</div>
     </div>
-    <div class="navbar-title">INFO PADAM</div>
+
+    <!-- Ini hanya muncul di layar kecil -->
+    <div class="navbar-link">INFO PADAM</div>
+
+    
   </header>
 
   <div class="container">
