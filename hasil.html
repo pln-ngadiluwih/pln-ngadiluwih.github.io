@@ -21,30 +21,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
       padding: 10px 5%;
-
-      max-height: 100px
-    }
-
-    .navbar-logo {
-      height: 20vh;
-      width: 150px;
     }
 
     .navbar-left {
       display: flex;
       align-items: center;
-   
     }
 
-    .navbar-link {
-      text-decoration: none;
-      color: white;
-      font-size: 25px;
-      font-weight: 600;
-      list-style-type: none;
+    .navbar-logo {
+      height: 80px;
+      width: auto;
     }
-    
+
     .navbar-right {
       display: flex;
       flex-direction: column;
@@ -52,6 +42,16 @@
       color: gray;
       font-size: 14px;
       line-height: 1.6;
+    }
+
+    .navbar-title {
+      display: none;
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      margin-top: 8px;
     }
 
     .container {
@@ -133,6 +133,20 @@
         font-size: 16px;
       }
     }
+
+    @media (max-width: 600px) {
+      .navbar-title {
+        display: block;
+      }
+
+      .navbar-logo {
+        height: 60px;
+      }
+
+      .navbar-right {
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -140,13 +154,13 @@
   <header class="navbar">
     <div class="navbar-left">
       <img src="PT-PLN-Persero-04-scaled-removebg-preview.png" alt="Logo PLN" class="navbar-logo" />
-      <div class="navbar-link">INFO PADAM</div>
     </div>
     <div class="navbar-right">
       <div>UID JATIM</div>
       <div>UP3 KEDIRI</div>
       <div>ULP NGADILUWIH</div>
     </div>
+    <div class="navbar-title">INFO PADAM</div>
   </header>
 
   <div class="container">
